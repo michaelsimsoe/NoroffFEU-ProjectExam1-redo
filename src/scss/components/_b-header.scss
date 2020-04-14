@@ -1,0 +1,120 @@
+/*------------------------------------*\
+    #HEADER
+\*------------------------------------*/
+
+.b-header {
+  display: none;
+}
+
+@media only screen and (min-width: 770px) {
+  .b-header {
+    align-items: center;
+    background-color: black;
+    min-height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    padding: 0 2em;
+    width: 100%;
+    z-index: 5;
+    transition: all .6s ease-out;
+    top: 0;
+  }
+
+
+  .b-header--intro {
+    justify-content: center;
+  }
+
+  .b-header__main-logo {
+    position: relative;
+    transition: all .6s ease-out;
+  }
+
+  .b-header__main-logo a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .b-header__main-logo h1 {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .b-header__main-logo--intro {
+    position: absolute;
+    left: 50%;
+    top: 320%;
+    transform: translate(-50%, -40%);
+    z-index: 2;
+    font-size: 5.8rem;
+  }
+
+  @media only screen and (min-width: 770px) {
+    .b-header__main-logo--intro h1{
+      font-size: 7.2rem;
+    }
+  }
+
+  .b-header__main-logo__the {
+    display: none;
+  }
+
+  .b-header__main-logo--intro .b-header__main-logo__the,
+  .b-header__main-logo--intro .b-header__main-logo__space,
+  .b-header__main-logo--intro .b-header__main-logo__time {
+    display: block;
+    color: #025A8F;
+  }
+
+
+  .b-header__main-logo--intro .b-header__main-logo__the,
+  .b-header__main-logo--intro .b-header__main-logo__time {
+    font-size: 3.2rem;
+  }
+  .b-header__main-logo--intro .b-header__main-logo__time {
+    padding-left: 4rem;
+  }
+
+  .b-header__main-logo__space {}
+  .b-header__main-logo__x {
+    color: #8A96A6;
+  }
+  .b-header__main-logo__time {}
+
+  .b-header__main-nav {
+    display: flex;
+    padding: 1em;
+  }
+
+  .b-header__main-nav-item {
+    margin: .4em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    padding: .2em;
+  }
+
+  .b-header__main-nav-item a:hover {
+    color: #025A8F;
+  }
+
+  .b-header__main-nav-item:hover {
+    background-color: rgb(0, 129, 210);
+  }
+
+  .b-header__main-nav-item--active {
+    text-decoration: underline;
+    background-color: #025A8F;
+    padding: .2em;
+  }
+
+  .b-header__main-nav-item--active:hover {
+    background-color: rgb(0, 129, 210);
+  }
+
+  .b-header__main-nav-item--active a:hover {
+    color: #fff;
+  }
+
+}

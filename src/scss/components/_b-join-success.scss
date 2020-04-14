@@ -1,0 +1,16 @@
+/*------------------------------------*\
+    #JOIN SUCCESS
+\*------------------------------------*/
+.b-join-success {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(21, 0, 61, 0.9), rgba(21, 0, 61, 0.6));
+}
+
+.b-join-success__message {
+    margin: .5em;
+    padding: 1em;
+}
