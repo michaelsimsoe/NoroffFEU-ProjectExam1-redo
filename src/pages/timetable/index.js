@@ -1,6 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { gethHistoricalEvents, getLauncEvents } from '../../actions/index';
+import { makeLaunchElement, makeHistoricalEvent } from '../../utils/events';
+import { TimeTableRow } from './timeTableRow';
 
 export const TimeTable = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(gethHistoricalEvents());
+    dispatch(getLauncEvents());
+    // eslint-disable-next-line
+  }, []);
+
+  const events = () => {
+    const historicalEvents = state.events.historical?.map((event, index) => {
+      return <TimeTableRow key={event.id} item={makeHistoricalEvent(event)} />;
+    });
+    const launchEvents = state.events.launch?.map((event, index) => {
+      return <TimeTableRow key={event.id} item={makeLaunchElement(event)} />;
+    });
+
+    return [...historicalEvents, ...launchEvents];
+  };
   return (
     <main className="o-timetable-container" id="maincontent">
       <article className="b-timetable">
@@ -46,7 +70,9 @@ export const TimeTable = () => {
                 <th>Link to event</th>
               </tr>
             </thead>
-            <tbody className="b-timetable__timetable__body"></tbody>
+            <tbody className="b-timetable__timetable__body">
+              {state.events.launch ? events() : []}
+            </tbody>
           </table>
         </div>
       </article>
