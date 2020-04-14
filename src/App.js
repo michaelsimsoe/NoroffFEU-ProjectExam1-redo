@@ -5,6 +5,10 @@ import { Header } from './components/header';
 import { Footer } from './components/footer';
 import { MobileMenu } from 'components/mobileMenu';
 import { SkipToContent } from 'components/skiptToContent';
+import { TimeTable } from 'pages/timetable';
+import { JoinPage } from 'pages/join';
+import { JoinSuccessPage } from 'pages/success';
+import { SingleEvent } from 'pages/single';
 
 function App() {
   return (
@@ -15,6 +19,18 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Home />
+        </Route>
+        <Route exact path="/single">
+          <SingleEvent />
+        </Route>
+        <Route exact path="/timetable">
+          <TimeTable />
+        </Route>
+        <Route exact path="/join">
+          <JoinPage />
+        </Route>
+        <Route exact path="/join/success">
+          <JoinSuccessPage />
         </Route>
       </Switch>
       <Footer />
