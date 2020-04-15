@@ -5,10 +5,11 @@ import { gethHistoricalEvents, getLauncEvents } from '../../actions/index';
 
 import { HeroSection } from './heroSection';
 import { EventItem } from './eventItem';
-import { makeLaunchElement, makeHistoricalEvent } from '../../utils/events';
 import { Timeline } from './timeline';
 
-import scrollEvent from './scrollEvent';
+import { makeLaunchElement, makeHistoricalEvent } from '../../utils/events';
+
+// import scrollEvent from './scrollEvent';
 
 export const Home = () => {
   const state = useSelector((state) => state);
@@ -17,7 +18,7 @@ export const Home = () => {
   useEffect(() => {
     dispatch(gethHistoricalEvents());
     dispatch(getLauncEvents());
-    scrollEvent();
+    // scrollEvent();
     // eslint-disable-next-line
   }, []);
 

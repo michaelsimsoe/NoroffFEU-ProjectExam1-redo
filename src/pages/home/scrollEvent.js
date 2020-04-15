@@ -14,10 +14,6 @@ export default function () {
   //   launchButton.innerHTML = 'Shut down';
   // }
 
-  /*
-   * Function to display how much is left in order to scroll all the way to the bottom
-   *
-   */
   function scrollPercent() {
     var winScroll =
       document.body.scrollTop || document.documentElement.scrollTop;
