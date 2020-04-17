@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const EventItem = ({ item, side, index }) => {
+  const identifier = item.isHistoryEvent ? 'h' + item.id : item.flight_number;
   return (
     <article
       className={
@@ -27,13 +29,13 @@ export const EventItem = ({ item, side, index }) => {
         ) : (
           ''
         )}
-        <a
-          href={`single/?type=${item.eventType}&id=${item.id}`}
+        <Link
+          to={`single/${identifier}`}
           tabIndex={index === 4 ? '7' : ''}
           className="btn btn__cta b-timeline__item__btn"
         >
           Read More
-        </a>
+        </Link>
       </div>
     </article>
   );

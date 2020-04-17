@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { scrollStoryHeader } from '../../utils/scrollStoryEvents';
 
 export const Header = () => {
@@ -42,19 +42,31 @@ export const Header = () => {
         </Link>
       </div>
       <nav className="b-header__main-nav">
-        <Link
+        <NavLink
+          exact={true}
+          activeClassName="b-header__main-nav-item--active"
           tabIndex="3"
           to="/"
-          className="b-header__main-nav-item b-header__main-nav-item--active"
+          className="b-header__main-nav-item"
         >
           Timeline
-        </Link>
-        <Link tabIndex="4" to="/timetable" className="b-header__main-nav-item">
+        </NavLink>
+        <NavLink
+          activeClassName="b-header__main-nav-item--active"
+          tabIndex="4"
+          to="/timetable"
+          className="b-header__main-nav-item"
+        >
           Timetable
-        </Link>
-        <Link tabIndex="5" to="/join" className="b-header__main-nav-item">
+        </NavLink>
+        <NavLink
+          activeClassName="b-header__main-nav-item--active"
+          tabIndex="5"
+          to="/join"
+          className="b-header__main-nav-item"
+        >
           Join us
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );

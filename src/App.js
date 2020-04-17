@@ -20,7 +20,7 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/single">
+        <Route exact path="/single/:id">
           <SingleEvent />
         </Route>
         <Route exact path="/timetable">

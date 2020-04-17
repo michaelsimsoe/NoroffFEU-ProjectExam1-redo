@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { gethHistoricalEvents, getLauncEvents } from '../../actions/index';
@@ -6,6 +6,8 @@ import { makeLaunchElement, makeHistoricalEvent } from '../../utils/events';
 import { TimeTableRow } from './timeTableRow';
 
 export const TimeTable = () => {
+  const [showHistory, setShowHistory] = useState(true);
+  const [showLaunch, setShowLaunch] = useState(true);
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -17,13 +19,33 @@ export const TimeTable = () => {
 
   const events = () => {
     const historicalEvents = state.events.historical?.map((event, index) => {
-      return <TimeTableRow key={event.id} item={makeHistoricalEvent(event)} />;
+      return (
+        <TimeTableRow
+          display={showHistory}
+          key={event.event_date_unix}
+          item={makeHistoricalEvent(event)}
+        />
+      );
     });
     const launchEvents = state.events.launch?.map((event, index) => {
-      return <TimeTableRow key={event.id} item={makeLaunchElement(event)} />;
+      return (
+        <TimeTableRow
+          display={showLaunch}
+          key={event.flight_number}
+          item={makeLaunchElement(event)}
+        />
+      );
     });
 
     return [...historicalEvents, ...launchEvents];
+  };
+
+  const toggleHistoricalEvents = () => {
+    setShowHistory(!showHistory);
+  };
+
+  const toggleLaunchEvents = () => {
+    setShowLaunch(!showLaunch);
   };
   return (
     <main className="o-timetable-container" id="maincontent">
@@ -46,18 +68,20 @@ export const TimeTable = () => {
               type="checkbox"
               name="show_history"
               id="show_history"
-              checked
+              onClick={toggleHistoricalEvents}
+              defaultChecked={true}
             />
-            <label for="show_history">Show historical events</label>
+            <label htmlFor="show_history">Show historical events</label>
           </div>
           <div className="b-timetable__table-controll__group">
             <input
               type="checkbox"
               name="show_launches"
               id="show_launches"
-              checked
+              onClick={toggleLaunchEvents}
+              defaultChecked={true}
             />
-            <label for="show_launches">Show launches</label>
+            <label htmlFor="show_launches">Show launches</label>
           </div>
         </div>
         <div className="b-timetable__table-container">

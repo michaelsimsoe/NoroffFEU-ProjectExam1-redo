@@ -1,6 +1,8 @@
-export function scrollDown(px, stop) {
+export function scrollDown(px, stop, ref) {
+  if (!ref) return;
+  const element = ref;
   if (document.documentElement.scrollTop >= stop) {
-    scrollIntoView();
+    scrollIntoView(element);
     return;
   }
   if (document.documentElement.scrollTop === 200) {
@@ -8,24 +10,24 @@ export function scrollDown(px, stop) {
   }
   setTimeout(function () {
     document.documentElement.scrollTop += px;
-    scrollDown(px + 10, stop);
+    scrollDown(px + 10, stop, element);
   }, 100);
 }
 
 export function countDown(el, time) {
   if (time < 0) return scrollDown(200, 600);
   setTimeout(() => {
-    el.innerHTML = `${time.toString()}:00`;
+    el.innerHTML = `0${time.toString()}:00`;
     countDown(el, time - 1);
-  }, 100);
+  }, 1000);
 }
 
-function scrollIntoView() {
-  const timeline = document.getElementById('timeline');
+function scrollIntoView(ref) {
+  const timeline = ref;
   const timelineTop = timeline.getBoundingClientRect().top;
   setTimeout(function () {
     window.scrollTo({
-      top: timelineTop,
+      top: timelineTop + timelineTop * 0.4,
       left: 0,
       behavior: 'smooth',
     });

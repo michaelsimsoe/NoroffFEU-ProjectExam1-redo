@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const TimeTableRow = ({ item }) => {
+export const TimeTableRow = ({ item, display }) => {
+  console.log(display);
   return (
     <tr
+      style={{
+        display: display ? 'block' : 'none',
+      }}
       className={
         'b-timetable__timetable__row ' +
         (item.isHistoryEvent
@@ -25,7 +29,7 @@ export const TimeTableRow = ({ item }) => {
       </td>
       <td>${item.title}</td>
       <td>
-        <Link to={'/single/' + item.id}>Read about event</Link>
+        <Link to={'/single/' + item.id + '?timetable'}>Read about event</Link>
       </td>
     </tr>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { gethHistoricalEvents, getLauncEvents } from '../../actions/index';
@@ -9,50 +9,61 @@ import { Timeline } from './timeline';
 
 import { makeLaunchElement, makeHistoricalEvent } from '../../utils/events';
 
-// import scrollEvent from './scrollEvent';
-
 export const Home = () => {
   const state = useSelector((state) => state);
+  const [timelineRef, setTimelineRef] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(gethHistoricalEvents());
     dispatch(getLauncEvents());
-    // scrollEvent();
     // eslint-disable-next-line
   }, []);
 
   const events = () => {
+    if (!state.events.historical || !state.events.launch) return;
     let side = 'left';
-    const historicalEvents = state.events.historical?.map((event, index) => {
+    const historicalEvents = state.events.historical.map((event) =>
+      makeHistoricalEvent(event)
+    );
+    const launchEvents = state.events.launch.map((event) =>
+      makeLaunchElement(event)
+    );
+    const eventArray = [...historicalEvents, ...launchEvents];
+    const sorted = eventArray.sort((a, b) => (a.date > b.date ? 1 : -1));
+    const newSorted = sorted.map((event, index) => {
+      if (event.isHistoryEvent) {
+        return (
+          <EventItem
+            key={'h' + event.id}
+            item={event}
+            side={side === 'left' ? (side = 'right') : (side = 'left')}
+            index={index}
+          />
+        );
+      }
       return (
         <EventItem
-          key={event.id}
-          item={makeHistoricalEvent(event)}
-          side={side === 'left' ? (side = 'right') : (side = 'left')}
-          index={index}
-        />
-      );
-    });
-    const launchEvents = state.events.launch?.map((event, index) => {
-      return (
-        <EventItem
-          key={event.id}
-          item={makeLaunchElement(event)}
+          key={event.flight_number}
+          item={event}
           side={'right'}
           index={index}
         />
       );
     });
 
-    return [...historicalEvents, ...launchEvents];
+    return Array.from(newSorted);
+  };
+
+  const getRef = (ref) => {
+    setTimelineRef(ref);
   };
 
   return (
     <>
       <p id="viewport">SPAN</p>
-      <HeroSection />
-      <Timeline events={state.events.launch ? events() : []} />
+      <HeroSection timelineRef={timelineRef} />
+      <Timeline getRef={getRef} events={state.events.launch ? events() : []} />
     </>
   );
 };

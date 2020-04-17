@@ -19,6 +19,7 @@ export const Timeline = (props) => {
   };
 
   useEffect(() => {
+    props.getRef(timelineRef);
     window.addEventListener('scroll', scrollEvent, false);
     displayPercentage({
       progress: progressIndicatorRef.current,
@@ -28,7 +29,7 @@ export const Timeline = (props) => {
     return function cleanup() {
       window.removeEventListener('scroll', scrollEvent, false);
     };
-  }, []);
+  }, [props]);
   return (
     <main id="maincontent" className="o-main-container">
       <div

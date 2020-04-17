@@ -11,7 +11,7 @@ import {
   scrollStoryTakeoffRocket,
 } from '../../utils/scrollStoryEvents';
 
-export const HeroSection = () => {
+export const HeroSection = (props) => {
   const cloudsRef = useRef();
   const subheadingRef = useRef();
   const groundRocketRef = useRef();
@@ -56,7 +56,7 @@ export const HeroSection = () => {
       <div ref={subheadingRef} className="b-takeoff__sub">
         <h3>Take a look at the timeline below, or launch off when ready</h3>
       </div>
-      <TakoffControll />
+      <TakoffControll timelineRef={props.timelineRef} />
     </section>
   );
 };
