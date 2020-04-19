@@ -29,8 +29,22 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Prata';
+  src: url('../../assets/fonts/Prata/Prata-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../assets/fonts/Montserrat/Montserrat-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   font-size: 10px;
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: 'Montserrat', Arial, sans-serif;
   color: #fff;
 }

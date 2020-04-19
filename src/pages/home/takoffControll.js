@@ -20,7 +20,7 @@ export const TakoffControll = (props) => {
   const handleClick = () => {
     if (!state.events.eventsLoaded || timeline === null) return;
     var timer = document.querySelector('.b-takeoff__controll-timer__time');
-    countDown(timer, 5);
+    countDown(timer, 4);
     setTimeout(function () {
       scrollDown(600, 600, timeline);
     }, 5000);

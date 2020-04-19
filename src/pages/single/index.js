@@ -28,9 +28,19 @@ export const SingleEvent = (params) => {
   }, []);
 
   const event = state.events.singleEvent ? state.events.singleEvent : '';
-  const eventLinks =
-    event && (event.launch.launch_links.article_link || event.launch_links);
 
+  const eventLinks =
+    event &&
+    (event.launch?.launch_links.article_link ||
+      event.launch_links ||
+      event.links);
+
+  const launcSuccesClass = `b-single__body__launch-information__status b-single__body__launch-information__status-' +
+      ${
+        event.isLaunch && (event.launch_success || event.launch.launch_success)
+          ? 'successful'
+          : 'not-successful'
+      }`;
   return (
     <main className="o-single-container" id="maincontent">
       <article className="b-single">
@@ -94,14 +104,7 @@ export const SingleEvent = (params) => {
                 <h3 className="b-single__body__launch-information__heading">
                   Launch Information
                 </h3>
-                <h4
-                  className={
-                    'b-single__body__launch-information__status b-single__body__launch-information__status-' +
-                      event.launch_success || event.launch.launch_success
-                      ? 'successful'
-                      : 'not-successful'
-                  }
-                >
+                <h4 className={launcSuccesClass}>
                   This launch was{' '}
                   {event.launch_success || event.launch.launch_success
                     ? 'successful'

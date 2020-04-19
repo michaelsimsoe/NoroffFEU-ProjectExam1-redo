@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { scrollStoryMobileMenu } from '../../utils/scrollStoryEvents';
 
 export const MobileMenu = () => {
   const mobileMenuRef = useRef();
   const mobileMenuInitLogoRef = useRef();
   const activeMobileLinkRef = useRef();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
   const scrollEvent = (event) => {
     scrollStoryMobileMenu({
       mobileMenu: mobileMenuRef.current,
@@ -14,40 +16,52 @@ export const MobileMenu = () => {
     });
   };
 
+  const headerLogoContainerClasses = isHomePage
+    ? 'b-mobile-menu b-mobile--init'
+    : 'b-mobile-menu';
+  const headerLogoClasses = isHomePage ? 'b-mobile-menu__main-logo--init' : '';
   useEffect(() => {
-    window.addEventListener('scroll', scrollEvent, false);
-
+    if (isHomePage) {
+      window.addEventListener('scroll', scrollEvent, false);
+    }
     return function cleanup() {
       window.removeEventListener('scroll', scrollEvent, false);
     };
-  }, []);
+  }, [isHomePage]);
   return (
-    <nav ref={mobileMenuRef} className="b-mobile-menu b-mobile--init">
+    <nav ref={mobileMenuRef} className={headerLogoContainerClasses}>
       <div className="b-mobile-menu__main-logo">
         <Link to="/" className="">
-          <h1
-            ref={mobileMenuInitLogoRef}
-            className="b-mobile-menu__main-logo--init"
-          >
+          <h1 ref={mobileMenuInitLogoRef} className={headerLogoClasses}>
             <span className="b-mobile-menu__main-logo__space">Space</span>
             <span className="b-mobile-menu__main-logo__x">X</span>
             <span className="b-mobile-menu__main-logo__time"> Timeline</span>
           </h1>
         </Link>
       </div>
-      <Link
+      <NavLink
+        exact={true}
         ref={activeMobileLinkRef}
         to="/"
-        className="b-mobile-menu__link b-mobile-menu__link--active b-mobile--init"
+        activeClassName="b-mobile-menu__link--active"
+        className="b-mobile-menu__link b-mobile--init"
       >
         Timeline
-      </Link>
-      <Link to="/timetable" className="b-mobile-menu__link">
+      </NavLink>
+      <NavLink
+        to="/timetable"
+        activeClassName="b-mobile-menu__link--active"
+        className="b-mobile-menu__link"
+      >
         Timetable
-      </Link>
-      <Link to="/join" className="b-mobile-menu__link">
+      </NavLink>
+      <NavLink
+        to="/join"
+        activeClassName="b-mobile-menu__link--active"
+        className="b-mobile-menu__link"
+      >
         Join
-      </Link>
+      </NavLink>
     </nav>
   );
 };

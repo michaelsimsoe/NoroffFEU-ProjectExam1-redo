@@ -4,6 +4,7 @@ import {
   GET_EVENT_ERROR,
   GET_SINGLE_HISTORICAL,
   GET_SINGLE_LAUNCH,
+  SUBMIT_FORM,
 } from './types';
 
 export const gethHistoricalEvents = () => {
@@ -174,5 +175,14 @@ export const getSingleHistoricalEvent = (id) => {
           type: GET_EVENT_ERROR,
         });
       });
+  };
+};
+
+export const submitForm = (data) => {
+  return {
+    type: SUBMIT_FORM,
+    payload: {
+      data,
+    },
   };
 };

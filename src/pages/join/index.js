@@ -1,6 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import * as yup from 'yup';
 
+import { submitForm } from '../../actions/index';
+import mars_half from './mars_half.webp';
+
+const schema = yup.object().shape({
+  join_first_name: yup.string().required('⚠ We need your first name.'),
+  join_last_name: yup.string().required('⚠ We need your last name.'),
+  join_sex: yup.string().required('⚠ We need to know your sex.'),
+  join_dob: yup.string().required('⚠ We really need to know your age.'),
+  join_email: yup
+    .string()
+    .email("⚠ This email address doesn't look right.")
+    .required('⚠ We need it for receipts and such.'),
+});
 export const JoinPage = () => {
+  const [showIdGender, setShowIdGender] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, errors } = useForm({
+    validationSchema: schema,
+  });
+
+  const onSubmit = (data) => {
+    history.push('/join/success');
+    dispatch(submitForm(data));
+  };
+
+  const handleShowIdGender = () => {
+    setShowIdGender(!showIdGender);
+  };
   return (
     <main className="o-join-container">
       <section className="b-join">
@@ -9,29 +41,30 @@ export const JoinPage = () => {
           <h3 className="b-join__subheading">But not because it is easy</h3>
         </header>
 
-        <form action="success.html" className="b-join__form">
+        <form onSubmit={handleSubmit(onSubmit)} className="b-join__form">
           <h2>We need the bright and the brave</h2>
           <h3>Are you one of them?</h3>
           <h3>Apply today!</h3>
 
           <div className="b-join__form__form-group">
-            <label id="join-first_name-label" htmlFor="join-first_name">
+            <label id="join-first_name-label" htmlFor="join_first_name">
               First name <span>(And any middle names)</span>
             </label>
             <input
               className="b-join__form__form-group__input"
               type="text"
-              name="join-first_name"
-              id="join-first_name"
-              required
-              pattern=".{1,}"
+              name="join_first_name"
+              id="join_first_name"
+              ref={register}
             />
-            <span
-              id="join-first_name-message"
-              className="b-join__form__error-message"
-            >
-              &#9888; We need your first name.
-            </span>
+            {errors.join_first_name && (
+              <span
+                id="join-first_name-message"
+                className="b-join__form__error-message"
+              >
+                {errors.join_first_name.message}
+              </span>
+            )}
           </div>
 
           <div className="b-join__form__form-group">
@@ -39,30 +72,31 @@ export const JoinPage = () => {
             <input
               className="b-join__form__form-group__input"
               type="text"
-              name="last_name"
+              name="join_last_name"
               id="join-last_name"
-              required
-              pattern=".{1,}"
+              ref={register}
             />
-            <span
-              id="join-last_name-message"
-              className="b-join__form__error-message"
-            >
-              &#9888; We need your last name.
-            </span>
+            {errors.join_last_name && (
+              <span
+                id="join-last_name-message"
+                className="b-join__form__error-message"
+              >
+                {errors.join_last_name.message}
+              </span>
+            )}
           </div>
 
           <div className="b-join__form__form-group b-join__form__form-group__sex">
             <p>Sex</p>
             <small>(We are going to Mars, so we need to know)</small>
             <div className="b-join__form__form-group__input">
-              <div>
+              <div className="b-join__join-sex-male">
                 <input
                   type="radio"
-                  name="join-sex"
+                  name="join_sex"
                   id="join-sex-male"
                   value="male"
-                  required
+                  ref={register}
                 />
                 <label htmlFor="join-sex-male">Male</label>
               </div>
@@ -70,36 +104,46 @@ export const JoinPage = () => {
                 <input
                   className="b-join__form__form-group__input"
                   type="radio"
-                  name="join-sex"
+                  name="join_sex"
                   id="join-sex-female"
-                  value="female"
+                  ref={register}
                 />
-                <span
-                  id="join-sex-message"
-                  className="b-join__form__error-message"
-                >
-                  &#9888; We need to know your sex.
-                </span>
+                {errors.join_sex && (
+                  <span
+                    id="join-sex-message"
+                    className="b-join__form__error-message"
+                  >
+                    {errors.join_sex.message}
+                  </span>
+                )}
                 <label htmlFor="join-sex-female">Female</label>
               </div>
             </div>
             <div className="b-join__identifying-gender__container">
-              <input type="checkbox" name="join-gender" id="join-gender" />
+              <input
+                onChange={handleShowIdGender}
+                type="checkbox"
+                name="join-gender"
+                id="join-gender"
+              />
               <label htmlFor="join-gender">
                 Is there anything about your <em>identifying gender</em> you
                 would like to mention?
               </label>
-              <div className="b-join__identifying-gender b-join__identifying-gender__hidden">
-                <p>You are not required to inform about this</p>
-                <label htmlFor="join-identifying-gender">
-                  What is your gender?
-                </label>
-                <input
-                  type="text"
-                  id="join-identifying-gender"
-                  name="join-identifying-gender"
-                />
-              </div>
+              {showIdGender && (
+                <div className="b-join__identifying-gender">
+                  <p>You are not required to inform about this</p>
+                  <label htmlFor="join-identifying-gender">
+                    What is your gender?
+                  </label>
+                  <input
+                    type="text"
+                    id="join-identifying-gender"
+                    name="join_identifying_gender"
+                    ref={register}
+                  />
+                </div>
+              )}
             </div>
           </div>
 
@@ -108,13 +152,18 @@ export const JoinPage = () => {
             <input
               className="b-join__form__form-group__input"
               type="date"
-              name="join-dob"
+              name="join_dob"
               id="join-dob"
-              required
+              ref={register}
             />
-            <span id="join-dob-message" className="b-join__form__error-message">
-              &#9888; We need your age.
-            </span>
+            {errors.join_dob && (
+              <span
+                id="join-dob-message"
+                className="b-join__form__error-message"
+              >
+                {errors.join_dob.message}
+              </span>
+            )}
           </div>
 
           <div className="b-join__form__form-group b-join__form__form-group__email">
@@ -125,17 +174,18 @@ export const JoinPage = () => {
             <input
               className="b-join__form__form-group__input"
               type="email"
-              name="join-email"
+              name="join_email"
               id="join-email"
-              required
-              pattern=".{1,}"
+              ref={register}
             />
-            <span
-              id="join-email-message"
-              className="b-join__form__error-message"
-            >
-              &#9888; We need your email address in order to contact you.
-            </span>
+            {errors.join_email && (
+              <span
+                id="join-email-message"
+                className="b-join__form__error-message"
+              >
+                {errors.join_email.message}
+              </span>
+            )}
           </div>
 
           <input
@@ -145,7 +195,7 @@ export const JoinPage = () => {
           />
         </form>
         <figure className="b-join__mars-bcg">
-          <img src="../img/mars_half.webp" alt="The red planet Mars" />
+          <img src={mars_half} alt="The red planet Mars" />
         </figure>
       </section>
     </main>
