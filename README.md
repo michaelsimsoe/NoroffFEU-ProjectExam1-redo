@@ -1,4 +1,7 @@
 # NoroffFEU-ProjectExam1-redo
+
+A Noroff FEU Portfolio 2 project
+
 ## Available Scripts
 
 In the project directory, you can run:
